@@ -1,6 +1,6 @@
 # CommonErrs
 
-TODO: Write a gem description
+Add Active Record-like errors to non AR models.
 
 ## Installation
 
@@ -17,8 +17,32 @@ Or install it yourself as:
     $ gem install common_errs
 
 ## Usage
+```
+  class Bunk
+    include CommonErrs
+    has_common_errs({separator: "--"}) #optional, default separator => ", "
+  end
 
-TODO: Write usage instructions here
+  Example 1:
+  bunk = Bunk.new
+  bunk.valid?  => true
+  
+  bunk.errors.add("Not bunk enough")
+  bunk.errors.add("Needs moar to be bunk")
+  bunk.valid? => false
+  bunk.errors.formatted => "Not bunk enough -- Needs moar to be bunk"
+
+  Example 2:
+  bunk = Bunk.new
+  
+  bunk.errors.add("Not bunk enough")
+  bunk.errors.add("Needs moar to be bunk")
+  bunk.errors.formatted(Proc.new {|item| item.concat("<br />")}) => "Not bunk enough<br />Needs moar to be bunk<br />"
+
+```
+
+## TODOs
+- optionally mixed in validator method?
 
 ## Contributing
 
