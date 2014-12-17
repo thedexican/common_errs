@@ -6,16 +6,17 @@ module CommonErrs
 
     attr_reader :messages
 
-    def initialize
+    def initialize(options)
       @messages = []
+      @options = options
     end
 
     def each(&block)
       messages.each{|message| block.call(message)}
     end
 
-    def formatted(options = {})
-      CommonErrs::Presenter.new(messages, opts).presented
+    def formatted(&block)
+      CommonErrs::Presenter.new(messages, @options).presented(&block)
     end
 
     def add(message)
